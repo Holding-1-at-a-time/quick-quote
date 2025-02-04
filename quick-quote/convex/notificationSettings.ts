@@ -33,8 +33,9 @@ export const update = mutation({
         } else {
             await ctx.db.insert("notificationSettings", {
                 ...args,
-                updatedAt: Date.now(),
-            })
+                tenantId: args.tenantId,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),})
         }
     },
 })

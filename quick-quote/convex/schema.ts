@@ -24,7 +24,7 @@ export default defineSchema({
         tenantId: v.id("tenants"),
         laborRate: v.number(),
         partMarkup: v.number(),
-        updatedAt: v.number(),
+        materialMarkup: v.number(),
     }).index("by_tenant", ["tenantId"]),
 
     notificationSettings: defineTable({
@@ -44,7 +44,7 @@ export default defineSchema({
         tenantId: v.id("tenants"),
         name: v.string(),
         author: v.string(),
-        storageId: v.string(),
+        storageId: v.id("_storage"),
         url: v.string(),
         image: v.bytes(),
     }).index("by_tenant", ["tenantId"])
@@ -78,6 +78,7 @@ export default defineSchema({
         .index("by_client", ["clientId"]),
 
     tenants: defineTable({
+        businessName: v.string(),
         name: v.string(),
         imageId: v.id("images"),
         email: v.string(),
@@ -88,7 +89,7 @@ export default defineSchema({
     Storage: defineTable({
         tenantId: v.id("tenants"),
         author: v.string(),
-        image: v.string(),
+        image: v.bytes(),
         url: v.string(),
         imageId: v.string(),
 

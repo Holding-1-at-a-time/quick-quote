@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { useUser } from "@clerk/nextjs"
 import { useQuery } from "convex/react"
+import { api } from "../../convex/_generated/api"
 import QuoteList from "./QuoteList"
 import ClientList from "./ClientList"
-import ImageUpload from "./ImageUpload"
-import PricingRules from "./PricingRules"
-import NotificationSettings from "./NotificationSettings"
-import { api } from "@/convex/_generated/api"
+import Settings from "./Settings"
+import UserManagement from "./UserManagement"
+import PredictiveAnalytics from "./PredictiveAnalytics"
 
 export default function AdminDashboard() {
     const { user } = useUser()
@@ -21,14 +21,14 @@ export default function AdminDashboard() {
     const tabs = [
         { id: "quotes", label: "Quotes" },
         { id: "clients", label: "Clients" },
-        { id: "upload", label: "Upload Image" },
-        { id: "pricing", label: "Pricing Rules" },
-        { id: "notifications", label: "Notifications" },
-        { id: "language", label: "Language Settings" },
+        { id: "users", label: "User Management" },
+        { id: "analytics", label: "Analytics" },
+        { id: "settings", label: "Settings" },
     ]
 
     return (
         <div className="space-y-6">
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
             <div className="border-b border-gray-200">
                 <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                     {tabs.map((tab) => (
@@ -36,8 +36,8 @@ export default function AdminDashboard() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`${activeTab === tab.id
-                                ? "border-blue-500 text-blue-600"
-                                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                                    ? "border-blue-500 text-blue-600"
+                                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
                         >
                             {tab.label}
@@ -49,10 +49,9 @@ export default function AdminDashboard() {
             <div className="mt-6">
                 {activeTab === "quotes" && <QuoteList quotes={quotes || []} />}
                 {activeTab === "clients" && <ClientList clients={clients || []} />}
-                {activeTab === "upload" && <ImageUpload tenant={Id<"tenants">} />}
-                {activeTab === "pricing" && <PricingRules gettenantId={_id<"tenants">} />}
-                {activeTab === "notifications" && <NotificationSettings tenantId={tenantId} />}
-                {activeTab === "language" && <LanguageSettings tenantId={tenantId} />}
+                {activeTab === "users" && <UserManagement />}
+                {activeTab === "analytics" && <PredictiveAnalytics />}
+                {activeTab === "settings" && <Settings tenantId={tenantId} />}
             </div>
         </div>
     )

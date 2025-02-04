@@ -1,5 +1,6 @@
-import type React from "react"
-import ConvexClientProvider from "./providers"
+import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from '@vercel/analytics/react';
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 export default function RootLayout({
   children,
@@ -7,11 +8,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ClerkProvider>
     <html lang="en">
+      <Analytics />
+      <
       <body>
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
+    </ClerkProvider>
   )
 }
 
